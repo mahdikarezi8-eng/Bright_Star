@@ -10,6 +10,7 @@
                         <thead>
                             <tr>
                                 <th>
+                                    
                                     Image
                                 </th>ٰ
                                 <th>

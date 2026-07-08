@@ -986,6 +986,34 @@
 
 
 
+            {{-- Backup --}}
+
+
+
+            <li class="nav-item">
+
+
+
+                <a href="{{ route('backup_list') }}">
+
+
+
+                    <span class="fa-solid fa-cloud-arrow-down text-primary" style="margin-right: 13px; font-size:18px;"></span>
+
+
+
+                    <span class="text-dark">Backup</span>
+
+
+
+                </a>
+
+
+
+            </li>
+
+
+
             {{-- Website Setting --}}
 
 

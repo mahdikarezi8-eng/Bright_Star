@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\TeacherSalaryController;
 use App\Http\Controllers\Admin\TimetableController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CertificatController;
+use App\Http\Controllers\Admin\BackupController;
 use App\Http\Controllers\Website\CourseController;
 use App\Http\Controllers\Website\ContactController;
 use App\Http\Controllers\Website\TestimonialController;
@@ -323,6 +324,13 @@ Route::post('contact_save',[ContactController::class, 'contact_save' ])->name('c
 Route::get('contact_edit/{id}',[ContactController::class, 'contact_edit' ])->name('contact_edit');
 Route::put('contact_update/{id}',[ContactController::class, 'contact_update' ])->name('contact_update');
 Route::get('contact_delete/{id}',[ContactController::class, 'contact_delete' ])->name('contact_delete');
+
+// Backup management
+Route::get('backup_list', [BackupController::class, 'backup_list'])->name('backup_list');
+Route::post('backup_create', [BackupController::class, 'backup_create'])->name('backup_create');
+Route::get('backup_download/{filename}', [BackupController::class, 'backup_download'])->name('backup_download');
+Route::get('backup_delete/{filename}', [BackupController::class, 'backup_delete'])->name('backup_delete');
+Route::post('backup_restore', [BackupController::class, 'backup_restore'])->name('backup_restore');
 // tes
 
 
