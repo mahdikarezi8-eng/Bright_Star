@@ -19,8 +19,21 @@
                 </div>
             </div>
             <div class="col-lg-7 col-md-7 col-6">
-                <div class="header-right">
-                    <div class="profile-box ml-15">
+                <div class="header-right d-flex align-items-center justify-content-end">
+                    <!-- Live Clock -->
+                    <div class="live-clock me-3">
+                        <div id="digitalClock" class="digital-clock">
+                            <span id="hours">00</span>
+                            <span class="colon">:</span>
+                            <span id="minutes">00</span>
+                            <span class="colon">:</span>
+                            <span id="seconds">00</span>
+                            <span class="ampm" id="ampm">AM</span>
+                        </div>
+                        <div id="dateDisplay" class="date-display"></div>
+                    </div>
+                    
+                    <div class="profile-box">
                         <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="profile-info">
@@ -250,9 +263,155 @@
     .toggle-password-btn:hover i {
         color: white !important;
     }
+
+    /* Live Clock Styles */
+    .live-clock {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 10px;
+        padding: 6px 14px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .digital-clock {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: 1px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        line-height: 1.2;
+    }
+
+    .digital-clock .colon {
+        animation: blink 1s infinite;
+    }
+
+    .digital-clock .ampm {
+        font-size: 0.7rem;
+        margin-left: 6px;
+        font-weight: 600;
+    }
+
+    .date-display {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 0.7rem;
+        color: rgba(255, 255, 255, 0.9);
+        text-align: center;
+        margin-top: 2px;
+        font-weight: 500;
+        line-height: 1;
+    }
+
+    @keyframes blink {
+        0%, 50% { opacity: 1; }
+        51%, 100% { opacity: 0.3; }
+    }
+
+    @media (max-width: 992px) {
+        .live-clock {
+            padding: 4px 10px;
+        }
+        
+        .digital-clock {
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .digital-clock .ampm {
+            font-size: 0.6rem;
+            margin-left: 4px;
+        }
+        
+        .date-display {
+            font-size: 0.65rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .live-clock {
+            padding: 3px 8px;
+        }
+        
+        .digital-clock {
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .digital-clock .ampm {
+            font-size: 0.55rem;
+            margin-left: 3px;
+        }
+        
+        .date-display {
+            font-size: 0.6rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .live-clock {
+            padding: 3px 8px;
+        }
+        
+        .digital-clock {
+            font-size: 0.75rem;
+            letter-spacing: 0;
+        }
+        
+        .digital-clock .ampm {
+            font-size: 0.5rem;
+            margin-left: 2px;
+        }
+        
+        .date-display {
+            font-size: 0.55rem;
+        }
+    }
 </style>
 
 <script>
+    // Live Clock Function
+    function updateClock() {
+        const now = new Date();
+        
+        // Get time components
+        let hours = now.getHours();
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        
+        // Convert to 12-hour format
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        
+        // Add leading zeros
+        const hoursStr = hours.toString().padStart(2, '0');
+        const minutesStr = minutes.toString().padStart(2, '0');
+        const secondsStr = seconds.toString().padStart(2, '0');
+        
+        // Update clock display
+        document.getElementById('hours').textContent = hoursStr;
+        document.getElementById('minutes').textContent = minutesStr;
+        document.getElementById('seconds').textContent = secondsStr;
+        document.getElementById('ampm').textContent = ampm;
+        
+        // Update date display
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const dateStr = now.toLocaleDateString('en-US', options);
+        document.getElementById('dateDisplay').textContent = dateStr;
+    }
+    
+    // Initialize clock and update every second
+    document.addEventListener('DOMContentLoaded', function() {
+        updateClock();
+        setInterval(updateClock, 1000);
+    });
+
     function togglePassword(fieldId) {
         const field = document.getElementById(fieldId);
         const button = field.nextElementSibling;

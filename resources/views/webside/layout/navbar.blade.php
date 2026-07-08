@@ -2,6 +2,22 @@
      <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
          <h2 class="m-0 text-primary"><i class="fa fa-star me-3"></i>Bright Star</h2>
      </a>
+     
+     <!-- Live Clock for Website -->
+     <div class="website-clock d-none d-lg-flex align-items-center ms-3">
+         <div class="clock-container">
+             <div id="websiteClock" class="website-digital-clock">
+                 <span id="webHours">00</span>
+                 <span class="colon">:</span>
+                 <span id="webMinutes">00</span>
+                 <span class="colon">:</span>
+                 <span id="webSeconds">00</span>
+                 <span class="ampm" id="webAmpm">AM</span>
+             </div>
+             <div id="webDateDisplay" class="website-date-display"></div>
+         </div>
+     </div>
+     
      <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
          <span class="navbar-toggler-icon"></span>
      </button>
@@ -21,6 +37,7 @@
              </div> --}}
              <a href="{{ route('contact') }}" class="nav-item nav-link">Contact</a>
          </div>
+         
          @if (auth()->check())
              <a href="{{ route('dashboard') }}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Dashboard<i
                      class="fa fa-arrow-right ms-3"></i></a>
@@ -76,3 +93,91 @@
      </div>
  </div>
  <!-- Carousel End -->
+
+<style>
+    /* Website Clock Styles */
+    .website-clock {
+        margin-left: 20px;
+    }
+
+    .clock-container {
+        background: transparent;
+        border: none;
+        padding: 8px 16px;
+        box-shadow: none;
+    }
+
+    .website-digital-clock {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #20c997;
+        letter-spacing: 1px;
+        line-height: 1.2;
+    }
+
+    .website-digital-clock .colon {
+        animation: webBlink 1s infinite;
+    }
+
+    .website-digital-clock .ampm {
+        font-size: 0.7rem;
+        margin-left: 6px;
+        font-weight: 600;
+    }
+
+    .website-date-display {
+        display: none;
+    }
+
+    @keyframes webBlink {
+        0%, 50% { opacity: 1; }
+        51%, 100% { opacity: 0.3; }
+    }
+
+    @media (max-width: 992px) {
+        .website-clock {
+            display: none !important;
+        }
+    }
+</style>
+
+<script>
+    // Website Clock Function
+    function updateWebsiteClock() {
+        const now = new Date();
+        
+        // Get time components
+        let hours = now.getHours();
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        
+        // Convert to 12-hour format
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        
+        // Add leading zeros
+        const hoursStr = hours.toString().padStart(2, '0');
+        const minutesStr = minutes.toString().padStart(2, '0');
+        const secondsStr = seconds.toString().padStart(2, '0');
+        
+        // Update clock display
+        document.getElementById('webHours').textContent = hoursStr;
+        document.getElementById('webMinutes').textContent = minutesStr;
+        document.getElementById('webSeconds').textContent = secondsStr;
+        document.getElementById('webAmpm').textContent = ampm;
+        
+        // Update date display
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const dateStr = now.toLocaleDateString('en-US', options);
+        document.getElementById('webDateDisplay').textContent = dateStr;
+    }
+    
+    // Initialize clock and update every second
+    document.addEventListener('DOMContentLoaded', function() {
+        updateWebsiteClock();
+        setInterval(updateWebsiteClock, 1000);
+    });
+</script>
+
