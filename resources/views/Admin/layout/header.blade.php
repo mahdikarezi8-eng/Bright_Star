@@ -32,7 +32,7 @@
                         </div>
                         <div id="dateDisplay" class="date-display"></div>
                     </div>
-                    
+
                     <div class="profile-box">
                         <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -309,25 +309,33 @@
     }
 
     @keyframes blink {
-        0%, 50% { opacity: 1; }
-        51%, 100% { opacity: 0.3; }
+
+        0%,
+        50% {
+            opacity: 1;
+        }
+
+        51%,
+        100% {
+            opacity: 0.3;
+        }
     }
 
     @media (max-width: 992px) {
         .live-clock {
             padding: 4px 10px;
         }
-        
+
         .digital-clock {
             font-size: 1rem;
             letter-spacing: 0.5px;
         }
-        
+
         .digital-clock .ampm {
             font-size: 0.6rem;
             margin-left: 4px;
         }
-        
+
         .date-display {
             font-size: 0.65rem;
         }
@@ -337,17 +345,17 @@
         .live-clock {
             padding: 3px 8px;
         }
-        
+
         .digital-clock {
             font-size: 0.9rem;
             letter-spacing: 0.5px;
         }
-        
+
         .digital-clock .ampm {
             font-size: 0.55rem;
             margin-left: 3px;
         }
-        
+
         .date-display {
             font-size: 0.6rem;
         }
@@ -357,17 +365,17 @@
         .live-clock {
             padding: 3px 8px;
         }
-        
+
         .digital-clock {
             font-size: 0.75rem;
             letter-spacing: 0;
         }
-        
+
         .digital-clock .ampm {
             font-size: 0.5rem;
             margin-left: 2px;
         }
-        
+
         .date-display {
             font-size: 0.55rem;
         }
@@ -378,34 +386,39 @@
     // Live Clock Function
     function updateClock() {
         const now = new Date();
-        
+
         // Get time components
         let hours = now.getHours();
         const minutes = now.getMinutes();
         const seconds = now.getSeconds();
         const ampm = hours >= 12 ? 'PM' : 'AM';
-        
+
         // Convert to 12-hour format
         hours = hours % 12;
         hours = hours ? hours : 12; // the hour '0' should be '12'
-        
+
         // Add leading zeros
         const hoursStr = hours.toString().padStart(2, '0');
         const minutesStr = minutes.toString().padStart(2, '0');
         const secondsStr = seconds.toString().padStart(2, '0');
-        
+
         // Update clock display
         document.getElementById('hours').textContent = hoursStr;
         document.getElementById('minutes').textContent = minutesStr;
         document.getElementById('seconds').textContent = secondsStr;
         document.getElementById('ampm').textContent = ampm;
-        
+
         // Update date display
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const options = {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        };
         const dateStr = now.toLocaleDateString('en-US', options);
         document.getElementById('dateDisplay').textContent = dateStr;
     }
-    
+
     // Initialize clock and update every second
     document.addEventListener('DOMContentLoaded', function() {
         updateClock();

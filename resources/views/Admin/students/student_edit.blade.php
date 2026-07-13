@@ -145,11 +145,13 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Teacher</label>
+                        <label class="col-sm-3 col-form-label">Class</label>
                         <div class="col-sm-9">
                             <select class="form-control form-select" name="class_id">
                                 @foreach ($classes as $class)
-                                    <option value="{{ $class->id }}">{{ $class->class_name }}</option>
+                                    <option value="{{ $class->id }}"
+                                        {{ $student->class_id == $class->id ? 'selected' : '' }}>{{ $class->class_name }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>

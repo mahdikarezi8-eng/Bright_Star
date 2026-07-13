@@ -98,13 +98,10 @@
                                 </tr>
                                 <tr>
                                     <td class="px-3 py-3">Gender</td>
-                                    <td class="px-3 py-3">{{ $student->gender == 0 ? 'Male' : 'Femal' }}</td>
+                                    <td class="px-3 py-3">{{ $student->gender == 1 ? 'Male' : 'Femal' }}</td>
                                 </tr>
 
-                                <tr>
-                                    <td class="px-3 py-3">Reg Date</td>
-                                    <td class="px-3 py-3">{{ $student->reg_date }}</td>
-                                </tr>
+
                             </table>
                         </div>
 
